@@ -55,7 +55,7 @@ export default function Home(){
                 showsVerticalScrollIndicator = {false}
                 contentContainerStyle={{paddingBottom: 100}}
                 renderItem={({ item }) => (
-                    <Link href={"/product/[id]"} asChild>
+                    <Link href={`/product/${item.id}`} asChild>
                       <Product data={item} />
                     </Link>
                   )}
