@@ -3,8 +3,16 @@ import { Header } from "@/components/header";
 import { FlatList, Text, View } from "react-native";
 
 import {CATEGORIES} from "@/utils/data/products"
+import { useState } from "react";
 
 export default function Home(){
+
+    const [category, setCategory] = useState(CATEGORIES[0])
+
+    function handleCategorySelect(selectedCategory: string){
+        setCategory(selectedCategory)
+    }
+
     return (
         <View className="flex-1 pt-8">
             <Header title="Faça o seu pedido" cardQuantityItems={1}/>
@@ -17,7 +25,10 @@ export default function Home(){
             showsHorizontalScrollIndicator = {false}
             contentContainerStyle={{gap: 12, paddingHorizontal: 20}}
             renderItem={({item}) => (
-                <CategoryButton title={item}/>
+                <CategoryButton 
+                    title={item} 
+                    onPress={() => handleCategorySelect(item)} 
+                    isSelected={item == category}/>
             )}
             />
         </View>
