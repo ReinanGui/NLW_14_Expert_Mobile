@@ -1,7 +1,7 @@
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Alert } from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 
-import { useCartStore } from "@/stores/cart-store";
+import { ProductCartProps, useCartStore } from "@/stores/cart-store";
 
 import { Header } from "@/components/header";
 import { Product } from "@/components/product";
@@ -11,11 +11,24 @@ import { Input } from "@/components/input";
 import { formatCurrency } from "@/utils/functions/format-currency";
 import { Button } from "@/components/button";
 import { Feather } from "@expo/vector-icons";
+import { LinkButton } from "@/components/link-button";
 
 export default function Cart(){
     const cartStore = useCartStore()
 
     const total = formatCurrency(cartStore.products.reduce((total, product) => total + product.price * product.quantity, 0))
+
+    function handleProductRemove(product: ProductCartProps){
+        Alert.alert("Remover", `Deseja remover ${product.title} do carrinho?`,[
+            {
+                text: "Cancelar"
+            },
+            {
+                text: "Remover",
+                onPress: () => cartStore.remove(product.id)
+            }
+        ])
+    }
     
     return (
         <View className="flex-1 pt-8">
@@ -30,7 +43,7 @@ export default function Cart(){
                     <View className="border-b border-slate-700">
                     {
                         cartStore.products.map((product) => (
-                            <Product key={product.id} data={product} />
+                            <Product key={product.id} data={product} onPress={() => handleProductRemove(product)}/>
                         ))
                     }
                     </View>
@@ -60,6 +73,8 @@ export default function Cart(){
                         <Feather name="arrow-right-circle" size={20} />
                     </Button.Icon>
                 </Button>
+
+                <LinkButton title="Voltar ao cardápio" href="/" />
             </View>
         </View>
     )
