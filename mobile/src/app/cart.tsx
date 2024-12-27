@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, Alert } from "react-native";
+import { ScrollView, View, Text, Alert, Linking } from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 
 import { ProductCartProps, useCartStore } from "@/stores/cart-store";
@@ -14,6 +14,8 @@ import { Feather } from "@expo/vector-icons";
 import { LinkButton } from "@/components/link-button";
 import { useState } from "react";
 import { useNavigation } from "expo-router";
+
+const PHONE_NUMBER = "5579996007073"
 
 export default function Cart(){
     const navigation = useNavigation()
@@ -52,6 +54,7 @@ export default function Cart(){
             \n Valor total: ${total}
         `
 
+        Linking.openURL(`http://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${message}`)
         cartStore.clear()
         navigation.goBack()
     }
