@@ -1,4 +1,4 @@
-# README do Projeto: NLW 14 Expert - React Native 🚀
+# NLW Expert: React Native - Rocketseat 🚀
 
 ---
 
